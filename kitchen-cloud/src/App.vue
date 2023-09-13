@@ -1,18 +1,40 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <header class="navbar">
+      <div class="navbar-left">
+        <span class="navbar-text">CLOUD KITCHEN</span>
+      </div>
+      <div class="navbar-right">
+        <i class="fas fa-bell bell-icon" @click="handleBellClick"></i>
+        <i class="fas fa-circle-user  user-icon" @click="handleUserClick"></i>
+      </div>
+    </header>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        
+          <RouterLink to="/estoque" class="sidebar-link">
+            <i class="fa-brands fa-microsoft fa-xl"></i>
+            <span class="sidebar-text">Painel</span>
+          </RouterLink>
+          
+          <RouterLink to="/estoque" class="sidebar-link">
+            <i class="fa-brands fa-dropbox fa-2xl"></i>
+            <span class="sidebar-text">Estoque</span>
+          </RouterLink>
+          
+          <RouterLink to="/estoque" class="sidebar-link">
+            <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            <span class="sidebar-text">Vendas</span>
+          </RouterLink>
       </nav>
     </div>
   </header>
@@ -21,65 +43,89 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.navbar {
+  background: #ff0000; /* Cor de fundo da navbar */
+  color: white; /* Cor do texto na navbar */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Espaçamento interno da navbar */
+  position: fixed; /* Fixa a barra de navegação no topo */
+  top: 0; /* Define a posição no topo da página */
+  left: 0; /* Define a posição no canto esquerdo */
+  right: 0; /* Define a largura total */
+  z-index: 999; /* Define uma ordem de sobreposição alta */
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.navbar-text {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 24px;
+}
+
+/* Estilos para o texto "Cloud Kitchen" no canto esquerdo */
+.navbar-left {
+  font-weight: bold;
+}
+
+/* Estilos para a seção do canto direito com os ícones */
+.navbar-right {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo para o ícone de sino */
+.bell-icon {
+  margin-right: 40px; 
+  color: #ffffff; 
+}
+
+/* Estilo para o ícone de usuário */
+.user-icon {
+  margin-right: 20px;
+  color: #ffffff;
 }
 
 nav {
-  width: 100%;
-  font-size: 12px;
+  background: #ff0000a4;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+nav ul {
+  padding-top: 15rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+nav li {
   text-align: center;
-  margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.sidebar-text {
+  font-size: 18px;
+}
+.sidebar-link {
+  text-decoration: none;
+  color: white;
+  font-family: 'Lilita One', sans-serif;
+  display: flex;
+  flex-direction: column; /* Alteração para exibir ícone acima do texto */
+  align-items: center;
+  justify-content: center;
+  height: 18%;
+  margin-bottom: 1px;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.sidebar-link i {
+  margin-bottom: 30px; /* Espaçamento entre o ícone e o texto */
 }
 </style>
