@@ -21,7 +21,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
       <nav>
         
-          <RouterLink to="/estoque" class="sidebar-link">
+          <RouterLink to="/painel" class="sidebar-link">
             <i class="fa-brands fa-microsoft fa-xl"></i>
             <span class="sidebar-text">Painel</span>
           </RouterLink>
@@ -31,8 +31,8 @@ import { RouterLink, RouterView } from 'vue-router'
             <span class="sidebar-text">Estoque</span>
           </RouterLink>
           
-          <RouterLink to="/estoque" class="sidebar-link">
-            <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+          <RouterLink to="/vendas" class="sidebar-link">
+            <i class="fa-regular fa-money-bill-1 fa-2xl"></i>
             <span class="sidebar-text">Vendas</span>
           </RouterLink>
       </nav>
