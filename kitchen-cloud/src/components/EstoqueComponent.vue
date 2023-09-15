@@ -27,95 +27,44 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Produto A</td>
-                <td>Unidade</td>
-                <td>Categoria X</td>
-                <td>100</td>
-                <td>200</td>
-                <td>20</td>
-            </tr>
+                <tr v-for="item in estoqueData" :key="item.cod">
+                    <td>{{ item.cod }}</td>
+                    <td>{{ item.produto }}</td>
+                    <td>{{ item['unidade-medida'] }}</td>
+                    <td>{{ item.categoria }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.capacidade }}</td>
+                    <td>{{ item['estoque-minimo'] }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    name: 'estoque'
+    name: 'estoque',
+    data() {
+      return {
+        estoqueData: []
+      };
+    },
+    mounted() {
+      this.fetchData();
+    },
+    methods: {
+      fetchData() {
+        axios.get('http://localhost:3000/estoque')
+        .then(response => {
+          this.estoqueData = response.data;
+        })
+        .catch(error => {
+          console.error('Erro ao realizar busca no estoque: ', error);
+        });
+      }
+    }
+
 }
 </script>
 
