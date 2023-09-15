@@ -63,7 +63,7 @@ export default {
     },
     methods: {
       fetchData() {
-        axios.get('http://localhost:3000/estoque')
+        axios.get('https://api.mocki.io/v2/99f96196/estoque')
         .then(response => {
           this.estoqueData = response.data;
         })
