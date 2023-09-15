@@ -10,8 +10,8 @@
         </div>
 
         <div class="search-input">
-            <input placeholder="Pesquisar" class="input-search">
-            <button class="search-button"><i class="fa-regular fa-paper-plane"></i></button>
+            <input placeholder="Pesquisar produto" class="input-search" v-model="searchTerm">
+            <!-- <button class="search-button"><i class="fa-regular fa-paper-plane"></i></button> -->
         </div>
 
         <table class="table-data">
@@ -27,7 +27,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="item in estoqueData" :key="item.cod">
+                <tr v-for="item in filteredEstoque" :key="item.cod">
                     <td>{{ item.cod }}</td>
                     <td>{{ item.produto }}</td>
                     <td>{{ item['unidade-medida'] }}</td>
@@ -47,9 +47,17 @@ export default {
     name: 'estoque',
     data() {
       return {
-        estoqueData: []
+        estoqueData: [],
+        searchTerm: '',
       };
     },
+    computed: {
+      filteredEstoque() {
+        const termo = this.searchTerm.toLowerCase();
+        return this.estoqueData.filter(item => item.produto.toLowerCase().includes(termo));
+      }
+    },
+
     mounted() {
       this.fetchData();
     },
@@ -102,7 +110,7 @@ export default {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-family: 'Times New Roman', sans-serif;
-  width: 33%; /* Define a largura para ocupar 100% do espaço disponível */
+  width: 25%; /* Define a largura para ocupar 100% do espaço disponível */
 }
 .search-button {
   margin-left: 5px;
