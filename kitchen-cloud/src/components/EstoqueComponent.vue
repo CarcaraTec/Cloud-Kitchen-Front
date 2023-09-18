@@ -22,19 +22,19 @@
                 <th>Unidade de Medida</th>
                 <th>Categoria</th>
                 <th>Quantidade</th>
-                <th>Capacidade</th>
-                <th>Estoque Mínimo</th>
+                <!-- <th>Capacidade</th>
+                <th>Estoque Mínimo</th> -->
             </tr>
             </thead>
             <tbody>
                 <tr v-for="item in filteredEstoque" :key="item.cod">
-                    <td>{{ item.cod }}</td>
-                    <td>{{ item.produto }}</td>
-                    <td>{{ item['unidade-medida'] }}</td>
-                    <td>{{ item.categoria }}</td>
+                    <td>{{ item.codIngrediente }}</td>
+                    <td>{{ item.nomeIngrediente }}</td>
+                    <td>{{ item.unidadeMedida }}</td>
+                    <td>{{ item.categoriaIngrediente }}</td>
                     <td>{{ item.quantidade }}</td>
-                    <td>{{ item.capacidade }}</td>
-                    <td>{{ item['estoque-minimo'] }}</td>
+                    <!-- <td>{{ item.capacidade }}</td>
+                    <td>{{ item['estoque-minimo'] }}</td> -->
                 </tr>
             </tbody>
         </table>
@@ -54,7 +54,7 @@ export default {
     computed: {
       filteredEstoque() {
         const termo = this.searchTerm.toLowerCase();
-        return this.estoqueData.filter(item => item.produto.toLowerCase().includes(termo));
+        return this.estoqueData.filter(item => item.nomeIngrediente.toLowerCase().includes(termo));
       }
     },
 
@@ -63,7 +63,7 @@ export default {
     },
     methods: {
       fetchData() {
-        axios.get('https://api.mocki.io/v2/99f96196/estoque')
+        axios.get('http://localhost:8081/view-estoque')
         .then(response => {
           this.estoqueData = response.data;
         })
