@@ -6,7 +6,7 @@
     </head>
     <div class="container">
         <div class="component-title">
-            <H1>ESTOQUE</H1>
+            <H1>PAINEL</H1>
         </div>
 
         <div class="search-input">

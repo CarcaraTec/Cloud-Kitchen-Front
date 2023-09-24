@@ -21,14 +21,14 @@ import { RouterLink, RouterView } from 'vue-router'
 
       <nav>
         
-          <RouterLink to="/painel" class="sidebar-link">
-            <i class="fa-brands fa-microsoft fa-xl"></i>
-            <span class="sidebar-text">Painel</span>
+          <RouterLink to="/dash" class="sidebar-link">
+            <i class="fa-solid fa-chart-bar fa-2xl"></i>
+            <span class="sidebar-text">Dashboard</span>
           </RouterLink>
           
           <RouterLink to="/estoque" class="sidebar-link">
-            <i class="fa-brands fa-dropbox fa-2xl"></i>
-            <span class="sidebar-text">Estoque</span>
+            <i class="fa-brands fa-microsoft fa-2xl"></i>
+            <span class="sidebar-text">Painel</span>
           </RouterLink>
           
           <RouterLink to="/vendas" class="sidebar-link">
