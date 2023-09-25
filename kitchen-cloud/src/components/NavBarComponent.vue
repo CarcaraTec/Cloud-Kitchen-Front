@@ -1,40 +1,83 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import NavBarComponent from './components/NavBarComponent.vue';
-</script>
-
 <template>
-  <header>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-    <NavBarComponent/>
-    <div class="wrapper">
-
-      <nav>
-
-          <RouterLink to="/dash" class="sidebar-link">
-            <i class="fa-solid fa-chart-bar fa-2xl"></i>
-            <span class="sidebar-text">Dashboard</span>
-          </RouterLink>
-
-          <RouterLink to="/estoque" class="sidebar-link">
-            <i class="fa-brands fa-microsoft fa-2xl"></i>
-            <span class="sidebar-text">Painel</span>
-          </RouterLink>
-
-          <RouterLink to="/vendas" class="sidebar-link">
-            <i class="fa-regular fa-money-bill-1 fa-2xl"></i>
-            <span class="sidebar-text">Vendas</span>
-          </RouterLink>
-      </nav>
+  <header class="navbar">
+    <div class="navbar-left">
+      <span class="navbar-text">CLOUD KITCHEN</span>
+    </div>
+    <div class="navbar-right">
+      <i class="fas fa-bell bell-icon" @click="handleBellClick" ref="bellIcon"></i>
+      <i class="fas fa-circle-user user-icon" @click="handleUserClick"></i>
     </div>
   </header>
 
-  <RouterView />
+  <!-- Dropdown -->
+  <div v-if="showDropdown" class="dropdown" :style="dropdownStyle">
+    <ul>
+      <li><a href="#">Item 1</a></li>
+      <li><a href="#">Item 2</a></li>
+      <li><a href="#">Item 3</a></li>
+    </ul>
+  </div>
 </template>
 
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+const showDropdown = ref(false);
+const bellIcon = ref(null);
+const dropdownStyle = ref({
+  top: '0px',
+  left: '0px',
+});
+
+const handleBellClick = () => {
+  showDropdown.value = !showDropdown.value; // Alternar a visibilidade do dropdown
+}
+
+const handleUserClick = () => {
+  // Lógica para lidar com o clique no ícone do usuário
+}
+
+onMounted(() => {
+  // Obter as coordenadas do ícone do sino e definir a posição do dropdown
+  const bellIconRect = bellIcon.value.getBoundingClientRect();
+  dropdownStyle.value.top = `${bellIconRect.bottom+20}px`;
+  dropdownStyle.value.left = `${bellIconRect.left+15}px`;
+
+  console.log(bellIconRect.bottom)
+});
+</script>
+
+  
+
 <style scoped>
+.dropdown {
+  position: absolute;
+  top: 50px; /* Ajuste a posição conforme necessário */
+  right: 10px; /* Ajuste a posição conforme necessário */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dropdown li {
+  margin: 5px 0;
+}
+
+.dropdown a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+.dropdown a:hover {
+  color: #007bff;
+}
 .navbar {
   background: #ff0000; /* Cor de fundo da navbar */
   color: white; /* Cor do texto na navbar */
