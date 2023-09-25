@@ -10,6 +10,8 @@
         </div>
 
         <div class="search-input">
+          <input type="date" v-model="selectedDate" @change="filterDataByDate" />
+
             <!-- <input placeholder="Pesquisar produto" class="input-search" v-model="searchTerm"> -->
             <!-- <button class="search-button"><i class="fa-regular fa-paper-plane"></i></button> -->
         </div>
@@ -26,7 +28,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="item in filteredVenda" :key="item.cod">
+                <tr v-for="item in filteredVendaByDate" :key="item.codItemVenda">
                     <td>{{ item.codItemVenda }}</td>
                     <td>{{ item.nomePrato }}</td>
                     <td>{{ item.quantidade }}x</td>
@@ -48,13 +50,21 @@ export default {
     return {
       vendasData: [],
       searchTerm: '',
+      selectedDate: null
     };
   },
   computed: {
-    filteredVenda() {
-      const termo = this.searchTerm.toLowerCase();
-      return this.vendasData.filter(item => item.nomePrato.toLowerCase().includes(termo));
-    },
+    filteredVendaByDate() {
+    if (!this.selectedDate) {
+      return this.vendasData;
+    }
+    
+    const selectedDate = new Date(this.selectedDate).toISOString().split('T')[0];
+    return this.vendasData.filter((item) => {
+      const itemDate = item.dataVenda.split('T')[0];
+      return itemDate === selectedDate;
+    });
+  },
   },
   mounted() {
     this.fetchData();
@@ -84,6 +94,20 @@ export default {
 
       return date.toLocaleString('pt-BR', options);
     },
+    filterDataByDate() {
+  if (!this.selectedDate) {
+    // Se a data não estiver selecionada, exiba todos os dados
+    this.filteredVenda = this.vendasData;
+  } else {
+    // Se uma data estiver selecionada, filtre os dados com base nessa data
+    const selectedDate = new Date(this.selectedDate).toISOString().split('T')[0];
+    this.filteredVenda = this.vendasData.filter((item) => {
+      const itemDate = item.dataVenda.split('T')[0];
+      return itemDate === selectedDate;
+    });
+  }
+},
+
   },
 };
 </script>

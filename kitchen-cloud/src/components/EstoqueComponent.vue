@@ -8,8 +8,8 @@
         <div class="component-title">
             <H1>PAINEL</H1>
         </div>
-
         <div class="search-input">
+          <span class="title-estoque">Estoque</span>
             <input placeholder="Pesquisar produto" class="input-search" v-model="searchTerm">
             <!-- <button class="search-button"><i class="fa-regular fa-paper-plane"></i></button> -->
         </div>
@@ -34,7 +34,7 @@
                     <td>{{ item.categoriaIngrediente }}</td>
                     <td>{{ item.quantidade }}</td>
                     <!-- <td>{{ item.capacidade }}</td>
-                    <td>{{ item['estoque-minimo'] }}</td> -->
+                    <td>{{ item.estoqueMinimo }}</td> -->
                 </tr>
             </tbody>
         </table>
@@ -118,6 +118,14 @@ export default {
   border: 1px solid #00000052;
   background-color: #ff000065;
   color: white;
+}
+
+.title-estoque{
+  color: #ff0000a4;
+  font-family: 'Lilita One', sans-serif;
+  text-align: left;
+  margin-right: 45rem;
+  font-size: 22px;
 }
 
 input {
