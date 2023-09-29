@@ -13,7 +13,11 @@
 
     <!-- Renderize o gráfico automaticamente ao carregar o componente -->
     <ChartEstoqueComponent v-if="showChart" :estoqueData="estoqueData" />
-    <ChartVendasComponent v-if="showChart" :vendasData="vendasData" />
+    <div class="input-wrapper">
+      <input type="date" v-model="selectedDate" @input="handleDateInputChange" />
+    </div>
+    <ChartVendasComponent v-if="showChart" :vendasData="vendasData" :selectedDate="selectedDate" />
+
   </div>
 </template>
 
@@ -31,6 +35,7 @@ export default {
       showChart: true, // Defina como true para mostrar o gráfico automaticamente
       estoqueData: [],
       vendasData: [], // Seus dados de estoque
+      selectedDate: null,
     };
   },
 };
@@ -42,13 +47,18 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Espaço entre os cards */
+  gap: 20px;
 }
 
 .card {
-  width: 550px; /* Largura do card */
-  height: 250px; /* Altura do card */
+  width: 550px;
+  height: 250px;
   border: 1px solid #ff0000;
   margin-top: 30px;
+}
+
+.input-wrapper {
+  margin-left:88%;
+  margin-top: 5%;
 }
 </style>
