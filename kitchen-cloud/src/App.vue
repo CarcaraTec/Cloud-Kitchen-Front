@@ -18,7 +18,7 @@ import NavBarComponent from './components/NavBarComponent.vue';
             <span class="sidebar-text">Dashboard</span>
           </RouterLink>
 
-          <RouterLink to="/estoque" class="sidebar-link">
+          <RouterLink to="/painel" class="sidebar-link">
             <i class="fa-brands fa-microsoft fa-2xl"></i>
             <span class="sidebar-text">Painel</span>
           </RouterLink>

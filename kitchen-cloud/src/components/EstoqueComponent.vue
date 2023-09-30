@@ -1,15 +1,5 @@
 <template>
-    <head>
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    </head>
-    <div class="container">
-        <div class="component-title">
-            <H1>PAINEL</H1>
-        </div>
         <div class="search-input">
-          <span class="title-estoque">Estoque</span>
             <input placeholder="Pesquisar produto" class="input-search" v-model="searchTerm">
             <!-- <button class="search-button"><i class="fa-regular fa-paper-plane"></i></button> -->
         </div>
@@ -38,7 +28,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
 </template>
 
 <script>
@@ -77,27 +66,6 @@ export default {
 </script>
 
 <style>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch; /* Faz com que o componente ocupe todo o espaço disponível na vertical */
-  justify-content: stretch; /* Faz com que o componente ocupe todo o espaço disponível na horizontal */
-  height: 100vh; /* Define a altura para ocupar 100% da altura da tela */
-  width: 100%; /* Define a largura para ocupar 100% da largura disponível */
-  padding: 20px;
-  margin-top: 100px;
-  margin-bottom: 16rem;
-}
-
-.component-title {
-  color: #ff0000a4;
-  font-family: 'Lilita One', sans-serif;
-  text-align: left;
-  margin-right: 950px;
-  font-size: 20px;
-  margin-top: -20px;
-}
-
 .search-input {
   display: flex;
   justify-content: flex-end;
@@ -118,14 +86,6 @@ export default {
   border: 1px solid #00000052;
   background-color: #ff000065;
   color: white;
-}
-
-.title-estoque{
-  color: #ff0000a4;
-  font-family: 'Lilita One', sans-serif;
-  text-align: left;
-  margin-right: 45rem;
-  font-size: 22px;
 }
 
 input {
