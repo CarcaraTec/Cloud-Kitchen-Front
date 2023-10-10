@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     fetchData() {
-      axios.get('http://localhost:8081/vendas')
+      axios.get('http://localhost:8080/vendas')
         .then(response => {
           this.vendasData = response.data;
         })

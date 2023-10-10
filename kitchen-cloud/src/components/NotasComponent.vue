@@ -1,8 +1,14 @@
 <template>
+  <div>
+    <div class="card-container">
+      <CardReceitaTotal :receitaTotal="cardData.receitaTotal" />
+      <CardTotalNotas :mediaVendas="cardData.mediaVendas" />
+      <CardPermanencia :permanencia="cardData.permanencia" />
+      <CardPrecoMedioNotas :precoMedioNota="cardData.precoMedioNota" />
+    </div>
     <div class="search-input">
       <input type="date" v-model="selectedDate" @change="filterDataByDate" />
     </div>
-
     <table class="table-data">
         <thead>
         <tr>
@@ -25,17 +31,35 @@
             </tr>
         </tbody>
     </table>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
+import CardReceitaTotal from './CardReceitaTotalComponent.vue';
+import CardTotalNotas from './CardTotalNotasComponent.vue';
+import CardPermanencia from './CardPermanenciaComponent.vue';
+import CardPrecoMedioNotas from './CardPrecoMedioNotasComponent.vue';
+
 export default {
 name: 'notas',
+components: {
+  CardReceitaTotal,
+  CardTotalNotas,
+  CardPermanencia,
+  CardPrecoMedioNotas
+},
 data() {
   return {
     notasData: [],
     searchTerm: '',
     selectedDate: null,
+    cardData: {
+      receitaTotal: null,
+      mediaVendas: null,
+      permanencia: null,
+      precoMedioNota: null,
+    },
   };
 },
 computed: {
@@ -53,10 +77,11 @@ computed: {
 
 mounted() {
   this.fetchData();
+  this.fetchCardData();
 },
 methods: {
   fetchData() {
-    axios.get('http://localhost:3000/notas')
+    axios.get('http://localhost:8080/view-comanda')
     .then(response => {
       this.notasData = response.data;
     })
@@ -91,6 +116,16 @@ methods: {
 
     return date.toLocaleString('pt-BR', options);
   },
+  fetchCardData() {
+      axios
+        .get('http://localhost:3000/cards')
+        .then((response) => {
+          this.cardData = response.data[0];
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar dados dos cards: ', error);
+        });
+    },
 }
 
 }
@@ -150,5 +185,35 @@ table td {
 
 table thead:first-child {
   background-color: #ffb1b183; /* Fundo vermelho claro */
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  margin-left: 50px;
+}
+
+.card {
+  width: 239px;
+  height: 150px;
+  padding: 5px;
+  border: 1px solid #00000042;
+  border-radius: 10px;
+  font-family: 'Lilita One', sans-serif;
+  background-color: #ff0000;
+  color: #fff; /* Texto branco */
+  text-align: left; /* Centralizar o texto horizontalmente */
+  font-size: 25px;
+}
+
+.card p {
+  margin: 0;
+  padding: 5px;
+}
+
+.dadosCard {
+  text-align: right;
+  font-size: 40px;
 }
 </style>
