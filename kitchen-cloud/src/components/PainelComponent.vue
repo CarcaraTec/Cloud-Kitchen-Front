@@ -3,14 +3,16 @@
       <div class="component-title">
         <h1>PAINEL</h1>
       </div>
-      <div class="search-input">
-        <button class="title-estoque" @click="setActiveTab('estoque')">Estoque</button>
-        <button class="title-notas" @click="setActiveTab('notas')">Notas</button>
-        <button class="title-fornecedor" @click="setActiveTab('fornecedor')">Fornecedor</button>
+      <div class="button-container">
+        <button  @click="setActiveTab('estoque')">Estoque</button>
+        <button  @click="setActiveTab('notas')">Notas</button>
+        <button  @click="setActiveTab('fornecedor')">Fornecedor</button>
+        <button  @click="setActiveTab('vendas')">Vendas</button>
       </div>
       <table-estoque v-if="activeTab === 'estoque'"></table-estoque>
       <table-notas v-if="activeTab === 'notas'"></table-notas>
       <table-fornecedor v-if="activeTab === 'fornecedor'"></table-fornecedor>
+      <table-vendas v-if="activeTab === 'vendas'"></table-vendas>
     </div>
   </template>
   
@@ -18,12 +20,14 @@
   import estoque from './EstoqueComponent.vue';
   import notas from './NotasComponent.vue';
   import fornecedor from './FornecedorComponent.vue';
+  import vendas from './VendasComponent.vue';
 
   export default {
     components: {
         'table-estoque': estoque,
         'table-notas': notas,
         'table-fornecedor': fornecedor,
+        'table-vendas': vendas
     },
     data() {
       return {
@@ -39,6 +43,7 @@
   </script>
 
 <style>
+
 .container {
   display: flex;
   flex-direction: column;
@@ -60,7 +65,12 @@
   margin-top: -20px;
 }
 
-.title-estoque {
+.button-container {
+  display: flex; 
+  justify-content: left; 
+}
+
+.button-container button {
   background-color: white;
   border: 1px solid #ff0000;
   border-radius: 18px;
@@ -72,28 +82,5 @@
   margin-right: 10px;
 }
 
-.title-notas {
-  background-color: white;
-  border: 1px solid #ff0000;
-  border-radius: 18px;
-  padding: 6px;
-  color: #ff0000a4;
-  font-family: 'Lilita One', sans-serif;
-  text-align: left;
-  margin-right: 10px;
-  font-size: 22px;
-}
-
-.title-fornecedor {
-  background-color: white;
-  border: 1px solid #ff0000;
-  border-radius: 18px;
-  padding: 6px;
-  color: #ff0000a4;
-  font-family: 'Lilita One', sans-serif;
-  text-align: left;
-  margin-right: 50rem;
-  font-size: 22px;
-}
 </style>
   
