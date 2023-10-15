@@ -36,7 +36,7 @@ export default {
       console.log('Input date changed:', this.selectedDate);
     },
     fetchDataAndCreateChart() {
-      axios.get('http://localhost:8080/vendas')
+      axios.get('http://localhost:8081/vendas')
         .then(response => {
           const vendasData = response.data.map(item => ({
             nomePrato: item.nomePrato,
