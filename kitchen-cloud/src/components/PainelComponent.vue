@@ -68,6 +68,7 @@
 .button-container {
   display: flex; 
   justify-content: left; 
+  margin-top: 20px;
 }
 
 .button-container button {
