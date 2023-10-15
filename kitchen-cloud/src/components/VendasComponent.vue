@@ -1,21 +1,8 @@
 <template>
-    <head>
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-    </head>
     <div class="container">
-        <div class="component-title">
-            <H1>VENDAS</H1>
-        </div>
-
         <div class="search-input">
           <input type="date" v-model="selectedDate" @change="filterDataByDate" />
-
-            <!-- <input placeholder="Pesquisar produto" class="input-search" v-model="searchTerm"> -->
-            <!-- <button class="search-button"><i class="fa-regular fa-paper-plane"></i></button> -->
         </div>
-
         <table class="table-data">
             <thead>
             <tr>
