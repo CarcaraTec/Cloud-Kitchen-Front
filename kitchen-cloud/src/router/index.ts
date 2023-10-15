@@ -3,6 +3,7 @@ import EstoqueComponent from '../components/EstoqueComponent.vue'
 import DashComponent from '../components/DashComponent.vue'
 import VendasComponent from '../components/VendasComponent.vue'
 import PainelComponent from '../components/PainelComponent.vue'
+import OperacoesComponent from '../components/OperacoesComponent.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/vendas',
       name: 'vendas',
       component: VendasComponent
+    },
+    {
+      path: '/operacoes',
+      name: 'operacoes',
+      component: OperacoesComponent
     }
   ]
 })
