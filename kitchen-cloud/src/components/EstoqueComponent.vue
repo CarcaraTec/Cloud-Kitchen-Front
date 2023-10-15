@@ -52,7 +52,7 @@ export default {
     },
     methods: {
       fetchData() {
-        axios.get('http://localhost:8080/view-estoque')
+        axios.get('http://localhost:8081/view-estoque')
         .then(response => {
           this.estoqueData = response.data;
         })

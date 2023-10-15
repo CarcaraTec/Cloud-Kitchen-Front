@@ -1,13 +1,16 @@
 <template>
   <div>
+    <div>
+    <VueDatePicker :model-value="selected" @update:model-value="dateSelected" range class="custom-datepicker"/>
+    </div>
     <div class="card-container">
       <CardReceitaTotal :receitaTotal="cardData.receitaTotal" />
-      <CardTotalNotas :mediaVendas="cardData.mediaVendas" />
-      <CardPermanencia :permanencia="cardData.permanencia" />
+      <CardTotalNotas :totalNota="cardData.totalNota" />
+      <CardPermanencia :permancencia="formatPermanencia(cardData.permancencia)" />
       <CardPrecoMedioNotas :precoMedioNota="cardData.precoMedioNota" />
     </div>
     <div class="search-input">
-      <input type="date" v-model="selectedDate" @change="filterDataByDate" />
+      <!-- <input type="date" v-model="selectedDate" @change="filterDataByDate" /> -->
     </div>
     <table class="table-data">
         <thead>
@@ -40,6 +43,9 @@ import CardReceitaTotal from './CardReceitaTotalComponent.vue';
 import CardTotalNotas from './CardTotalNotasComponent.vue';
 import CardPermanencia from './CardPermanenciaComponent.vue';
 import CardPrecoMedioNotas from './CardPrecoMedioNotasComponent.vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { format } from 'date-fns';
 
 export default {
 name: 'notas',
@@ -47,17 +53,21 @@ components: {
   CardReceitaTotal,
   CardTotalNotas,
   CardPermanencia,
-  CardPrecoMedioNotas
+  CardPrecoMedioNotas,
+  VueDatePicker
 },
 data() {
   return {
     notasData: [],
     searchTerm: '',
     selectedDate: null,
+    selected: null,
+    dataInitial: '',
+    dataEnd: '',
     cardData: {
       receitaTotal: null,
-      mediaVendas: null,
-      permanencia: null,
+      totalNota: null,
+      permancencia: null,
       precoMedioNota: null,
     },
   };
@@ -77,11 +87,74 @@ computed: {
 
 mounted() {
   this.fetchData();
-  this.fetchCardData();
 },
 methods: {
+  fetchCardData() {
+    axios.get('http://localhost:8081/painel-receitas', {
+      params: {
+        dataInicio: this.dataInitial,
+        dataFim: this.dataEnd,
+      }
+    })
+    .then(response => {
+      this.cardData = response.data;
+    })
+    .catch(error => {
+      console.error('Erro ao realizar busca: ', error);
+    });
+  },
+
+  dateSelected(modelData) {
+      this.selected = modelData;
+      if (this.selected) {
+        // Formate manualmente a data no formato "yyyy-MM-ddTHH:mm:ss"
+        const dataInitial = this.formatarData(this.selected[0]);
+        const dataEnd = this.formatarData(this.selected[1]);
+        console.log('Datas: ', this.selected);
+        console.log('Data de inicio a ser usada:', dataInitial);
+        console.log('Data de fim a ser usada:', dataEnd);
+        this.dataInitial = dataInitial;
+        this.dataEnd = dataEnd;
+        this.fetchCardData(dataInitial, dataEnd);
+      } else {
+        console.log('Nenhuma data selecionada.');
+      }
+  },
+  usarDataFormatada() {
+      if (this.selected) {
+        // Formate manualmente a data no formato "yyyy-MM-ddTHH:mm:ss"
+        const dataInicio = this.formatarData(this.selected[0]);
+        const dataFim = this.formatarData(this.selected[1]);
+        console.log('Data de inicio a ser usada:', dataInicio);
+        console.log('Data de fim a ser usada:', dataFim);
+      } else {
+        console.log('Nenhuma data selecionada.');
+      }
+    },
+    formatarData(data) {
+      const ano = data.getFullYear();
+      const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+      const dia = data.getDate().toString().padStart(2, '0');
+      const hora = data.getHours().toString().padStart(2, '0');
+      const minutos = data.getMinutes().toString().padStart(2, '0');
+      const segundos = data.getSeconds().toString().padStart(2, '0');
+
+      return `${ano}-${mes}-${dia}T${hora}:${minutos}:${segundos}`;
+    },
+
+  formatPermanencia(permancencia) {
+    if (permancencia && permancencia.startsWith("PT")) {
+      permancencia = permancencia.substring(2);
+    } else {
+      permancencia = ""; // Define como uma string vazia quando for nula
+    }
+    return permancencia;
+  },
+
+
+
   fetchData() {
-    axios.get('http://localhost:8080/view-comanda')
+    axios.get('http://localhost:8081/view-comanda')
     .then(response => {
       this.notasData = response.data;
     })
@@ -116,16 +189,7 @@ methods: {
 
     return date.toLocaleString('pt-BR', options);
   },
-  fetchCardData() {
-      axios
-        .get('http://localhost:3000/cards')
-        .then((response) => {
-          this.cardData = response.data[0];
-        })
-        .catch((error) => {
-          console.error('Erro ao buscar dados dos cards: ', error);
-        });
-    },
+
 }
 
 }
@@ -215,5 +279,9 @@ table thead:first-child {
 .dadosCard {
   text-align: right;
   font-size: 40px;
+}
+.custom-datepicker {
+  width: 400px;
+  margin-left: 675px;
 }
 </style>

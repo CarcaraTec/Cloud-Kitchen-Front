@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     fetchDataAndCreateChart() {
-      axios.get('http://localhost:8080/view-estoque')
+      axios.get('http://localhost:8081/view-estoque')
         .then(response => {
           const estoqueData = response.data.map(item => ({
             nomeIngrediente: item.nomeIngrediente,

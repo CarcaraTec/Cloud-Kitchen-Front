@@ -6,20 +6,24 @@
       <div class="search-input">
         <button class="title-estoque" @click="setActiveTab('estoque')">Estoque</button>
         <button class="title-notas" @click="setActiveTab('notas')">Notas</button>
+        <button class="title-fornecedor" @click="setActiveTab('fornecedor')">Fornecedor</button>
       </div>
       <table-estoque v-if="activeTab === 'estoque'"></table-estoque>
       <table-notas v-if="activeTab === 'notas'"></table-notas>
+      <table-fornecedor v-if="activeTab === 'fornecedor'"></table-fornecedor>
     </div>
   </template>
   
   <script>
   import estoque from './EstoqueComponent.vue';
   import notas from './NotasComponent.vue';
+  import fornecedor from './FornecedorComponent.vue';
 
   export default {
     components: {
         'table-estoque': estoque,
         'table-notas': notas,
+        'table-fornecedor': fornecedor,
     },
     data() {
       return {
@@ -76,7 +80,19 @@
   color: #ff0000a4;
   font-family: 'Lilita One', sans-serif;
   text-align: left;
-  margin-right: 57rem;
+  margin-right: 10px;
+  font-size: 22px;
+}
+
+.title-fornecedor {
+  background-color: white;
+  border: 1px solid #ff0000;
+  border-radius: 18px;
+  padding: 6px;
+  color: #ff0000a4;
+  font-family: 'Lilita One', sans-serif;
+  text-align: left;
+  margin-right: 50rem;
   font-size: 22px;
 }
 </style>
