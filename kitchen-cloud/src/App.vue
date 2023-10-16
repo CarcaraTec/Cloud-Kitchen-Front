@@ -18,14 +18,14 @@ import NavBarComponent from './components/NavBarComponent.vue';
             <span class="sidebar-text">Dashboard</span>
           </RouterLink>
 
-          <RouterLink to="/estoque" class="sidebar-link">
+          <RouterLink to="/painel" class="sidebar-link">
             <i class="fa-brands fa-microsoft fa-2xl"></i>
             <span class="sidebar-text">Painel</span>
           </RouterLink>
 
-          <RouterLink to="/vendas" class="sidebar-link">
+          <RouterLink to="/operacoes" class="sidebar-link">
             <i class="fa-regular fa-money-bill-1 fa-2xl"></i>
-            <span class="sidebar-text">Vendas</span>
+            <span class="sidebar-text">Operações</span>
           </RouterLink>
       </nav>
     </div>

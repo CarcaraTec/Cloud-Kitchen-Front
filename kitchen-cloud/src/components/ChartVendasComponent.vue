@@ -1,42 +1,84 @@
 <template>
-    <div>
-      <canvas ref="chart" width="400" height="600"></canvas>
-    </div>
-  </template>
+  <div>
+    <canvas ref="chart" width="400" height="600"></canvas>
+  </div>
+</template>
   
-  <script>
+<script>
 import { Chart } from 'chart.js/auto';
 import axios from 'axios';
 
 export default {
+  props: {
+    vendasData: Array,
+    selectedDate: String,
+  },
+
+  watch: {
+    selectedDate: 'filterDataByDate',
+  },
   mounted() {
+    // Adicione essa verificação para garantir que o gráfico só seja destruído quando já foi criado
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.fetchDataAndCreateChart();
   },
+  data() {
+    return {
+      chart: null,
+      chartData: [],
+      filteredChartData: [],
+    };
+  },
   methods: {
+    handleDateInputChange() {
+      console.log('Input date changed:', this.selectedDate);
+    },
     fetchDataAndCreateChart() {
       axios.get('http://localhost:8081/vendas')
         .then(response => {
           const vendasData = response.data.map(item => ({
             nomePrato: item.nomePrato,
             quantidade: item.quantidade,
+            dataVenda: item.dataVenda,
           }));
-          this.createChart(vendasData);
+          this.chartData = vendasData;
+          this.filteredChartData = vendasData;
+          this.createChart();
         })
         .catch(error => {
           console.error('Erro ao buscar dados de venda: ', error);
         });
     },
+    filterDataByDate() {
+      if (!this.selectedDate) {
+        this.filteredChartData = this.chartData;
+      } else {
+        const selectedDate = new Date(this.selectedDate).toISOString().split('T')[0];
+        this.filteredChartData = this.chartData.filter(item => {
+          const itemDate = item.dataVenda.split('T')[0];
+          return itemDate === selectedDate;
+        });
+      }
+
+      if (this.chart) {
+        this.chart.destroy();
+      }
+      this.createChart();
+    },
+
     createChart(data) {
       const ctx = this.$refs.chart.getContext('2d');
       const chartData = {
-        labels: data.map(item => item.nomePrato),
+        labels: this.filteredChartData.map(item => item.nomePrato),
         datasets: [
           {
             label: 'Quantidade',
-            backgroundColor: 'rgba(255, 0, 0, 0.2)', // Cor vermelha
-            borderColor: 'rgba(255, 0, 0, 1)', // Cor vermelha
+            backgroundColor: 'rgba(255, 0, 0, 0.2)',
+            borderColor: 'rgba(255, 0, 0, 1)',
             borderWidth: 1,
-            data: data.map(item => item.quantidade),
+            data: this.filteredChartData.map(item => item.quantidade),
           },
         ],
       };
@@ -45,15 +87,15 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            title: {
+          title: {
             display: true,
             text: 'Gestão de Vendas',
             color: 'red',
             font: {
-                size: 20,
-                family: 'Arial'
+              size: 20,
+              family: 'Arial'
             },
-            },
+          },
         },
         scales: {
           y: {
@@ -76,7 +118,6 @@ export default {
         },
       };
 
-      // Ajuste a altura do gráfico para corresponder à altura do elemento canvas
       options.layout = {
         padding: {
           left: 20,
@@ -86,7 +127,7 @@ export default {
         },
       };
 
-      new Chart(ctx, {
+      this.chart = new Chart(ctx, {
         type: 'bar',
         data: chartData,
         options,
