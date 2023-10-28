@@ -23,8 +23,13 @@ import NavBarComponent from './components/NavBarComponent.vue';
             <span class="sidebar-text">Painel</span>
           </RouterLink>
 
+          <RouterLink to="/gestao" class="sidebar-link">
+            <i class="fa-regular fa-user fa-2xl"></i>
+            <span class="sidebar-text">Gestão</span>
+          </RouterLink>
+          
           <RouterLink to="/operacoes" class="sidebar-link">
-            <i class="fa-regular fa-money-bill-1 fa-2xl"></i>
+            <i class="fa-brands fa-whmcs fa-2xl"></i>
             <span class="sidebar-text">Operações</span>
           </RouterLink>
       </nav>
