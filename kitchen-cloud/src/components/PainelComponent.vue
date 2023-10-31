@@ -56,15 +56,6 @@
   margin-bottom: 16rem;
 }
 
-.component-title {
-  color: #ff0000a4;
-  font-family: 'Lilita One', sans-serif;
-  text-align: left;
-  margin-right: 950px;
-  font-size: 20px;
-  margin-top: -20px;
-}
-
 .button-container {
   display: flex; 
   justify-content: left; 

@@ -4,7 +4,7 @@
         <h1>PESSOAL</h1>
       </div>
       <div>
-        <table-funcionario></table-funcionario>
+        <table-funcionario @redirecionar-para-detalhes="redirecionarParaDetalhes"></table-funcionario>
       </div>
   
     </div>
@@ -16,6 +16,11 @@ export default {
   name: 'gestao',
   components: {
     'table-funcionario': funcionario,
+  },
+  methods: {
+    redirecionarParaDetalhes(id) {
+      this.$router.push({ name: 'funcionario', params: { id: id } });
+    },
   },
   data() {
     return {

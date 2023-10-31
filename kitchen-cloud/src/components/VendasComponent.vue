@@ -113,6 +113,7 @@ export default {
 }
 
 .component-title {
+  width: 100%;
   color: #ff0000a4;
   font-family: 'Lilita One', sans-serif;
   text-align: left;

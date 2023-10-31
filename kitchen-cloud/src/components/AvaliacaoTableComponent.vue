@@ -1,21 +1,17 @@
 <template>
-    <div class="search-input">
-        <input placeholder="Pesquisar funcionário" class="input-search" v-model="searchTerm">
-    </div>
-
     <table class="table-data">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Nome funcionário</th>
-            <th>Função</th>
-            <th>Dia de folga</th>
+            <th>Nota atendimento</th>
+            <th>Comentário</th>
+            <th>Data da avaliação</th>
         </tr>
         </thead>
         <tbody>
             <tr v-for="item in filteredFuncionario" :key="item.cod">
                 <td>{{ item.id }}</td>
-                <td class="nome-prato"><span @click="redirecionarParaDetalhes(item.id)">{{ item.nome }}</span></td>
+                <td>{{ item.nome }}</td>
                 <td>{{ item.funcao }}</td>
                 <td>{{ item.diaFolga }}</td>
             </tr>
@@ -26,7 +22,7 @@
 <script>
 import axios from 'axios';
 export default {
-name: 'funcionario',
+name: 'avaliacao',
 data() {
   return {
     funcionarioData: [],
@@ -53,17 +49,7 @@ methods: {
       console.error('Erro ao realizar busca dos funcionários: ', error);
     });
   },
-  redirecionarParaDetalhes(id) {
-      // Emita um evento personalizado com o ID do funcionário para o componente pai
-      this.$emit('redirecionar-para-detalhes', id);
-    },
 }
 
 }
 </script>
-
-<style>
-table td.nome-prato:hover {
-  cursor: pointer;
-}
-</style>
