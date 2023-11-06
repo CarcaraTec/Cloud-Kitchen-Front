@@ -23,7 +23,7 @@
                 <label for="condicaoDisparo">Condição de Disparo:</label>
                 <select id="condicaoDisparo" v-model="formData.condicaoDisparo">
                     <option value="QUANTIDADE_EM_ESTOQUE">QUANTIDADE_EM_ESTOQUE</option>
-                    <!-- <option value="OUTRA_CONDICAO">OUTRA_CONDICAO</option> -->
+                    <option value="VALIDADE">VALIDADE</option>
                 </select>
             </div>
 
