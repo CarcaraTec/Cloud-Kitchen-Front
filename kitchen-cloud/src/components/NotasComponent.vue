@@ -280,8 +280,5 @@ table thead:first-child {
   text-align: right;
   font-size: 40px;
 }
-.custom-datepicker {
-  width: 400px;
-  margin-left: 675px;
-}
+
 </style>
