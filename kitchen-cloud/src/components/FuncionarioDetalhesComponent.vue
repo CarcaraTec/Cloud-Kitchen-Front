@@ -1,12 +1,25 @@
 <template>
- <div class="container">
-  <div class="component-nome">
-    <H1>{{ funcionario.nome }}</H1>
+  <div class="container">
+    <div class="component-nome">
+      <H1>{{ funcionario.nome }}</H1>
+    </div>
+    <div>
+      <VueDatePicker :model-value="selected" @update:model-value="dateSelected" range class="custom-datepicker"/>
+    </div>
+    <div class="card-container2">
+      <div class="card">
+        <p>Total atendimentos</p>
+        <p class="dadosCard">{{cardData.AtendimentosRealizados}} de {{cardData.totalAtendimentos}}</p>
+      </div>
+      <div class="card">
+        <p>Média de avaliação</p>
+        <p class="dadosCard"></p>
+      </div>
+    </div>
+    <div>
+      <table-avaliacao></table-avaliacao>
+    </div>
   </div>
-  <div>
-    <table-avaliacao></table-avaliacao>
-  </div>
- </div>
 </template>
 
 <script>
@@ -21,21 +34,80 @@ export default {
   data() {
     return {
       funcionario: {},
+      cardData: {},
+      idFunc: 0,
+      dataInicial: '',
+      dataFinal: '',
     };
   },
   created() {
     const funcionarioId = this.$route.params.id;
     this.fetchFuncionario(funcionarioId);
+    this.idFunc = this.$route.params.idFunc;
+    this.fetchCardData();
   },
   methods: {
     fetchFuncionario(id) {
       axios.get(`http://localhost:8081/funcionarios/${id}`)
         .then(response => {
           this.funcionario = response.data;
+          this.idFunc = this.funcionario.id; // Defina o idFunc com base nos dados recebidos
+          this.fetchCardData();
         })
         .catch(error => {
           console.error('Erro ao buscar informações do funcionário: ', error);
         });
+    },
+
+    fetchCardData(idFunc) {
+      axios.get(`http://localhost:8081/funcionarios/total-atendimentos/${this.idFunc}`, {
+        params: {
+          data1: this.dataInitial,
+          data2: this.dataEnd,
+        }
+      })
+      .then(response => {
+        this.cardData = response.data;
+      })
+      .catch(error => {
+        console.error('Erro ao realizar busca: ', error);
+      });
+    },
+
+  dateSelected(modelData) {
+      this.selected = modelData;
+      if (this.selected) {
+        const dataInitial = this.formatarData(this.selected[0]);
+        const dataEnd = this.formatarData(this.selected[1]);
+        console.log('Datas: ', this.selected);
+        console.log('Data de inicio a ser usada:', dataInitial);
+        console.log('Data de fim a ser usada:', dataEnd);
+        this.dataInitial = dataInitial;
+        this.dataEnd = dataEnd;
+        this.fetchCardData(dataInitial, dataEnd);
+      } else {
+        console.log('Nenhuma data selecionada.');
+      }
+  },
+  usarDataFormatada() {
+      if (this.selected) {
+        const dataInicio = this.formatarData(this.selected[0]);
+        const dataFim = this.formatarData(this.selected[1]);
+        console.log('Data de inicio a ser usada:', dataInicio);
+        console.log('Data de fim a ser usada:', dataFim);
+      } else {
+        console.log('Nenhuma data selecionada.');
+      }
+    },
+    formatarData(data) {
+      const ano = data.getFullYear();
+      const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+      const dia = data.getDate().toString().padStart(2, '0');
+      const hora = data.getHours().toString().padStart(2, '0');
+      const minutos = data.getMinutes().toString().padStart(2, '0');
+      const segundos = data.getSeconds().toString().padStart(2, '0');
+
+      return `${ano}-${mes}-${dia}T${hora}:${minutos}:${segundos}`;
     },
   },
 };
@@ -51,5 +123,16 @@ export default {
   margin-left: 50px;
   font-size: 25px;
   margin-top: 20px;
+}
+
+.card-container2{
+  display: flex;
+  justify-content: left;
+  margin: 10px;
+  margin-left: 50px;
+}
+
+.card{
+  margin-left: 10px;
 }
 </style>
