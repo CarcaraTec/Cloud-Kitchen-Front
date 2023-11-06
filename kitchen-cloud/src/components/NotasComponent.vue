@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-    <VueDatePicker :model-value="selected" @update:model-value="dateSelected" range class="custom-datepicker"/>
+    <VueDatePicker :model-value="selected" format="dd/MM/yyyy" locale="br" @update:model-value="dateSelected" range class="custom-datepicker"/>
     </div>
     <div class="card-container">
       <CardReceitaTotal :receitaTotal="cardData.receitaTotal" />

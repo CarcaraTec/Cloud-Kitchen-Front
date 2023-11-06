@@ -4,7 +4,7 @@
       <H1>{{ funcionario.nome }}</H1>
     </div>
     <div>
-      <VueDatePicker :model-value="selected" @update:model-value="dateSelected" range class="custom-datepicker"/>
+      <VueDatePicker :model-value="selected" format="dd/MM/yyyy" locale="br" @update:model-value="dateSelected" range class="custom-datepicker"/>
     </div>
     <div class="card-container2">
       <div class="card">
@@ -13,7 +13,7 @@
       </div>
       <div class="card">
         <p>Média de avaliação</p>
-        <p class="dadosCard"></p>
+        <p class="dadosCard">{{ !isNaN(avaliacaoData.mediaAvalicao) ? (avaliacaoData.mediaAvalicao / 2) : '0' }} ★</p>
       </div>
     </div>
     <div>
@@ -35,9 +35,10 @@ export default {
     return {
       funcionario: {},
       cardData: {},
+      avaliacaoData: {},
       idFunc: 0,
-      dataInicial: '',
-      dataFinal: '',
+      dataInitial: '2023-09-01T00:00:00',
+      dataEnd: '2023-09-30T00:00:00',
     };
   },
   created() {
@@ -47,12 +48,32 @@ export default {
     this.fetchCardData();
   },
   methods: {
+    fetchMediaAvaliacao(idFunc, dataAvaliacaoIni, dataAvaliacaoFin) {
+        axios.get(`http://localhost:8081/funcionarios/media-notas`, {
+          params: {
+            idFuncionario: this.idFunc,
+            dataAvaliacaoIni: this.dataInitial,
+            dataAvaliacaoFin: this.dataEnd,
+          }
+        })
+        .then(response => {
+          if(response.data.length > 0){
+          this.avaliacaoData = response.data[0];
+          }else{
+            alert('Sem dados de avaliação deste funcionário');
+          }
+        })
+        .catch(error => {
+          console.error('Erro ao buscar a média de avaliação: ', error);
+        });
+      },
     fetchFuncionario(id) {
       axios.get(`http://localhost:8081/funcionarios/${id}`)
         .then(response => {
           this.funcionario = response.data;
           this.idFunc = this.funcionario.id; // Defina o idFunc com base nos dados recebidos
           this.fetchCardData();
+          this.fetchMediaAvaliacao();
         })
         .catch(error => {
           console.error('Erro ao buscar informações do funcionário: ', error);
@@ -85,6 +106,7 @@ export default {
         this.dataInitial = dataInitial;
         this.dataEnd = dataEnd;
         this.fetchCardData(dataInitial, dataEnd);
+        this.fetchMediaAvaliacao(this.idFunc, dataInitial, dataEnd);
       } else {
         console.log('Nenhuma data selecionada.');
       }
