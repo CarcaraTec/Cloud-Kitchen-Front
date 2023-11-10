@@ -62,6 +62,31 @@
                 family: 'Arial',
               },
             },
+            legend: {
+            display: true,
+            position: 'right',
+            labels: {
+              generateLabels: function (chart) {
+                const data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    const meta = chart.getDatasetMeta(0);
+                    const ds = data.datasets[0];
+                    const currentValue = ds.data[i];
+                    return {
+                      text: `${label}: ${currentValue.toFixed(0)}%`,
+                      fillStyle: meta.controller.getStyle(i).backgroundColor,
+                      strokeStyle: 'transparent',
+                      lineWidth: 2,
+                      hidden: isNaN(currentValue),
+                      index: i,
+                    };
+                  });
+                }
+                return [];
+              },
+            },
+          },
           },
         };
   
