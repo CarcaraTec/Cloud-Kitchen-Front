@@ -7,12 +7,12 @@
         <button  @click="setActiveTab('estoque')">Estoque</button>
         <button  @click="setActiveTab('notas')">Notas</button>
         <button  @click="setActiveTab('fornecedor')">Fornecedor</button>
-        <button  @click="setActiveTab('vendas')">Vendas</button>
+        <button  @click="setActiveTab('pratos')">Pratos</button>
       </div>
       <table-estoque v-if="activeTab === 'estoque'"></table-estoque>
       <table-notas v-if="activeTab === 'notas'"></table-notas>
       <table-fornecedor v-if="activeTab === 'fornecedor'"></table-fornecedor>
-      <table-vendas v-if="activeTab === 'vendas'"></table-vendas>
+      <pratos v-if="activeTab === 'pratos'"></pratos>
     </div>
   </template>
   
@@ -20,14 +20,14 @@
   import estoque from './EstoqueComponent.vue';
   import notas from './NotasComponent.vue';
   import fornecedor from './FornecedorComponent.vue';
-  import vendas from './VendasComponent.vue';
+  import pratos from './PratosComponent.vue';
 
   export default {
     components: {
         'table-estoque': estoque,
         'table-notas': notas,
         'table-fornecedor': fornecedor,
-        'table-vendas': vendas
+        'pratos': pratos
     },
     data() {
       return {
