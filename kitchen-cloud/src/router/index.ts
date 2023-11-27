@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EstoqueComponent from '../components/EstoqueComponent.vue'
 import DashComponent from '../components/DashComponent.vue'
-import VendasComponent from '../components/VendasComponent.vue'
+import PratosComponent from '../components/PratosComponent.vue'
 import PainelComponent from '../components/PainelComponent.vue'
 import OperacoesComponent from '../components/OperacoesComponent.vue'
 import GestaoComponent from '../components/GestaoComponent.vue'
@@ -32,9 +32,9 @@ const router = createRouter({
       component: DashComponent
     },
     {
-      path: '/vendas',
-      name: 'vendas',
-      component: VendasComponent
+      path: '/pratos',
+      name: 'pratos',
+      component: PratosComponent
     },
     {
       path: '/operacoes',
